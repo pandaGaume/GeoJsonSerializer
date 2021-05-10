@@ -15,9 +15,9 @@ namespace IOfThings.Spatial.Text.GeoJson
         public static bool IsLinearRing(this Position[] polyline) => polyline != null && polyline.Length > 2 && polyline[0].Equals(polyline[polyline.Length - 1]);
         public static bool IsLinearRing(this GeoJsonLineString polyline) => IsLinearRing(polyline.Positions);
 
-        public static Position[] Aggregate(this IEnumerable<Position> locations)
+        public static BBox Aggregate(this IEnumerable<Position> locations)
         {
-            Position[] e = null;
+            BBox e = null;
             foreach (var l in locations)
             {
                 e = e == null ? l.BuildBBox() : e.AddInPlace(l);

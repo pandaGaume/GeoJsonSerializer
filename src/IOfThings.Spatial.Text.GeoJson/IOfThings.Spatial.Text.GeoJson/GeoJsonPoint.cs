@@ -12,13 +12,12 @@ namespace IOfThings.Spatial.Text.GeoJson
             get => _pos;
             set => _pos = value;
         }
-
         public override GeoJsonType Type => GeoJsonType.Point;
 
         [JsonIgnore]
         public Position Position { get => _pos; set => _pos = value; }
 
-        public override Position[] BuildBBox() => BBoxExtensions.BuildBBox(this);
+        public override BBox BuildBBox() => BBoxExtensions.BuildBBox(this);
 
     }
 }

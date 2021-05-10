@@ -14,6 +14,6 @@ namespace IOfThings.Spatial.Text.GeoJson
 
         [JsonPropertyName(Json.PropertyNames.features)]
         public IEnumerable<IGeoJsonFeature<P>> Features { get => _features; set => _features = value.ToList(); }
-        public override Position[] BuildBBox() => _features.Select(f=>f.BuildBBox()).Aggregate();
+        public override BBox BuildBBox() => _features.Select(f=>f.BuildBBox()).Aggregate();
     }
 }

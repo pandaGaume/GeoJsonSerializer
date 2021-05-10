@@ -2,6 +2,10 @@
 {
     public struct Position
     {
+        public static readonly Position Min = new Position(float.MinValue, float.MinValue, float.MinValue);
+        public static readonly Position Max = new Position(float.MaxValue, float.MaxValue, float.MaxValue);
+
+
         public static implicit operator Position(float[] coordinates) => new Position(coordinates);
         public static implicit operator float[](Position point) => point._alt.HasValue ? new float[] { point._lon, point._lat, point._alt.Value } : new float[] { point._lon, point._lat };
 

@@ -6,52 +6,49 @@ namespace IOfThings.Spatial.Text.GeoJson
 {
     public static class BBoxExtensions
     {
-        public static Position[] BuildBBox(this GeoJsonPoint pos) => BuildBBox(pos.Position);
-        public static Position[] BuildBBox(this GeoJsonMultiPoint pos) => BuildBBox(pos.Positions);
-        public static Position[] BuildBBox(this GeoJsonLineString pos) => BuildBBox(pos.Positions);
-        public static Position[] BuildBBox(this GeoJsonMultiLineString pos) => BuildBBox(pos.Positions);
-        public static Position[] BuildBBox(this GeoJsonPolygon pos) => BuildBBox(pos.Positions);
-        public static Position[] BuildBBox(this GeoJsonMultiPolygon pos) => BuildBBox(pos.Positions);
-        public static Position[] BuildBBox(this Position pos) => new Position[] { pos, pos };
-        public static Position[] BuildBBox(this IEnumerable<Position> pos) => pos.Aggregate();
-        public static Position[] BuildBBox(this IEnumerable<IEnumerable<Position>> pos) => pos.Select(p => p.BuildBBox()).Aggregate();
-        public static Position[] BuildBBox(this IEnumerable<IEnumerable<IEnumerable<Position>>> pos) => pos.Select(p => p.BuildBBox()).Aggregate();
+        public static BBox BuildBBox(this GeoJsonPoint pos) => BuildBBox(pos.Position);
+        public static BBox BuildBBox(this GeoJsonMultiPoint pos) => BuildBBox(pos.Positions);
+        public static BBox BuildBBox(this GeoJsonLineString pos) => BuildBBox(pos.Positions);
+        public static BBox BuildBBox(this GeoJsonMultiLineString pos) => BuildBBox(pos.Positions);
+        public static BBox BuildBBox(this GeoJsonPolygon pos) => BuildBBox(pos.Positions);
+        public static BBox BuildBBox(this GeoJsonMultiPolygon pos) => BuildBBox(pos.Positions);
+        public static BBox BuildBBox(this Position pos) => new BBox( pos, pos);
+        public static BBox BuildBBox(this IEnumerable<Position> pos) => pos.Aggregate();
+        public static BBox BuildBBox(this IEnumerable<IEnumerable<Position>> pos) => pos.Select(p => p.BuildBBox()).Aggregate();
+        public static BBox BuildBBox(this IEnumerable<IEnumerable<IEnumerable<Position>>> pos) => pos.Select(p => p.BuildBBox()).Aggregate();
 
 
-        public static Position[] AddInPlace(this Position[] a, Position[] b)
+        public static BBox AddInPlace(this BBox a, BBox b)
         {
-            if (b != null)
-            {
-                a[0].Longitude = Math.Min(a[0].Longitude, b[0].Longitude);
-                a[0].Latitude = Math.Min(a[0].Latitude, b[0].Latitude);
-                a[1].Longitude = Math.Max(a[1].Longitude, b[1].Longitude);
-                a[1].Latitude = Math.Max(a[1].Latitude, b[1].Latitude);
+            a.SouthWest.Longitude = Math.Min(a.SouthWest.Longitude, b.SouthWest.Longitude);
+            a.SouthWest.Latitude = Math.Min(a.SouthWest.Latitude, b.SouthWest.Latitude);
+            a.NorthEast.Longitude = Math.Max(a.NorthEast.Longitude, b.NorthEast.Longitude);
+            a.NorthEast.Latitude = Math.Max(a.NorthEast.Latitude, b.NorthEast.Latitude);
 
-                if (a.HasAltitude() && b.HasAltitude())
-                {
-                    a[0].Altitude = Math.Min(a[0].Altitude.Value, b[0].Altitude.Value);
-                    a[1].Altitude = Math.Max(a[1].Altitude.Value, b[1].Altitude.Value);
-                 }
+            if (a.HasAltitude() && b.HasAltitude())
+            {
+                a.SouthWest.Altitude = Math.Min(a.SouthWest.Altitude.Value, b.SouthWest.Altitude.Value);
+                a.NorthEast.Altitude = Math.Max(a.NorthEast.Altitude.Value, b.NorthEast.Altitude.Value);
             }
             return a;
         }
 
-        public static Position[] AddInPlace(this Position[] a, Position b)
+        public static BBox AddInPlace(this BBox a, Position b)
         {
-            a[0].Longitude = Math.Min(a[0].Longitude, b.Longitude);
-            a[0].Latitude = Math.Min(a[0].Latitude, b.Latitude);
-            a[1].Longitude = Math.Max(a[1].Longitude, b.Longitude);
-            a[1].Latitude = Math.Max(a[1].Latitude, b.Latitude);
+            a.SouthWest.Longitude = Math.Min(a.SouthWest.Longitude, b.Longitude);
+            a.SouthWest.Latitude = Math.Min(a.SouthWest.Latitude, b.Latitude);
+            a.NorthEast.Longitude = Math.Max(a.NorthEast.Longitude, b.Longitude);
+            a.NorthEast.Latitude = Math.Max(a.NorthEast.Latitude, b.Latitude);
 
             if (a.HasAltitude() && b.HasAltitude)
             {
-                a[0].Altitude = Math.Min(a[0].Altitude.Value, b.Altitude.Value);
-                a[1].Altitude = Math.Max(a[1].Altitude.Value, b.Altitude.Value);
+                a.SouthWest.Altitude = Math.Min(a.SouthWest.Altitude.Value, b.Altitude.Value);
+                a.NorthEast.Altitude = Math.Max(a.NorthEast.Altitude.Value, b.Altitude.Value);
             }
             return a;
         }
 
-        public static Position[] Aggregate(this IEnumerable<Position[]> envelopes)
+        public static BBox Aggregate(this IEnumerable<BBox> envelopes)
         {
             if (envelopes != null || !envelopes.Any())
             {
@@ -59,7 +56,7 @@ namespace IOfThings.Spatial.Text.GeoJson
             }
             return null;
         }
-        public static bool HasAltitude(this Position[] a) => a[0].Altitude.HasValue && a[1].Altitude.HasValue;
+        public static bool HasAltitude(this BBox a) => a.SouthWest.Altitude.HasValue && a.NorthEast.Altitude.HasValue;
 
     }
 }
