@@ -7,7 +7,7 @@ namespace IOfThings.Spatial.Text.GeoJson
 {
     public class GeoJsonMultiPoint : GeoJsonGeometry
     {
-        Position[] _coordinates;
+        internal Position[] _coordinates;
 
         /// <summary>
         /// For type "MultiPoint", the "coordinates" member is an array of positions.

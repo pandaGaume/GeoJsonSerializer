@@ -4,7 +4,7 @@ namespace IOfThings.Spatial.Text.GeoJson
 {
     public class GeoJsonPoint : GeoJsonGeometry
     {
-         Position _pos;
+        internal Position _pos;
 
         [JsonPropertyName(Json.PropertyNames.coordinates)]
         public float[] Coordinates

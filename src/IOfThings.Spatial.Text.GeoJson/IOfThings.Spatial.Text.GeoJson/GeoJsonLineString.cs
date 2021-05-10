@@ -6,7 +6,7 @@ namespace IOfThings.Spatial.Text.GeoJson
 {
     public class GeoJsonLineString : GeoJsonGeometry
     {
-        Position[] _coordinates;
+        internal Position[] _coordinates;
 
         /// <summary>
         /// For type "LineString", the "coordinates" member is an array of two or more positions.
