@@ -11,5 +11,7 @@ namespace IOfThings.Spatial.Text.GeoJson
         
         [JsonPropertyName(Json.PropertyNames.type)]
         public abstract GeoJsonType Type { get; }
+
+        public abstract Position[] BuildBBox() ;
     }
 }

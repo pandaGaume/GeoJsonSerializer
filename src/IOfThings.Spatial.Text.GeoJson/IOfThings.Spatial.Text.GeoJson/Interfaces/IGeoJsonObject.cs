@@ -15,5 +15,7 @@ namespace IOfThings.Spatial.Text.GeoJson
         /// A GeoJSON object MAY have a "bbox" member, the value of which MUST be a bounding box array
         /// </summary>
         Position[] BBox { get; }
+
+        Position[] BuildBBox();
     }
 }

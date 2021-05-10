@@ -14,5 +14,6 @@ namespace IOfThings.Spatial.Text.GeoJson
         
         [JsonPropertyName(Json.PropertyNames.properties)]
         public IGeoJsonProperties<P> Properties { get => _properties; set => _properties = value; }
+        public override Position[] BuildBBox() => _geometry.BuildBBox();
     }
 }

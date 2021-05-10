@@ -18,5 +18,7 @@ namespace IOfThings.Spatial.Text.GeoJson
 
         [JsonIgnore]
         public Position[] Positions => _coordinates;
+        public override Position[] BuildBBox() => BBoxExtensions.BuildBBox(this);
+
     }
 }

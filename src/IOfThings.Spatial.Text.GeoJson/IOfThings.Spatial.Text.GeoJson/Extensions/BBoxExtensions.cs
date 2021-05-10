@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace IOfThings.Spatial.Text.GeoJson
 {
-    public static class BBoxExtension
+    public static class BBoxExtensions
     {
         public static Position[] BuildBBox(this GeoJsonPoint pos) => BuildBBox(pos.Position);
         public static Position[] BuildBBox(this GeoJsonMultiPoint pos) => BuildBBox(pos.Positions);
