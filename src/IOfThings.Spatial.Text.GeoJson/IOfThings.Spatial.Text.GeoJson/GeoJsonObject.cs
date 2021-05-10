@@ -1,22 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace IOfThings.Spatial.Text.GeoJson
 {
-    public abstract class GeoJsonObject<T> : IGeoJsonObject<T>
+    public abstract class GeoJsonObject : IGeoJsonObject
     {
-        T[] _bbox;
+        float[] _bbox;
         
         [JsonPropertyName(Json.PropertyNames.bbox)]
-        public T[] BBox { get => ValidateBBox() ; set =>_bbox = value; }
+        public float[] BBox { get=> _bbox;   set =>_bbox = value; }
         
         [JsonPropertyName(Json.PropertyNames.type)]
         public abstract GeoJsonType Type { get; }
 
-        internal T[] ValidateBBox()
-        {
-            return _bbox = _bbox??BuildBBox();
-        }
-
-        protected virtual T[] BuildBBox() => default;
+        protected virtual float[] BuildBBox() => default;
     }
 }

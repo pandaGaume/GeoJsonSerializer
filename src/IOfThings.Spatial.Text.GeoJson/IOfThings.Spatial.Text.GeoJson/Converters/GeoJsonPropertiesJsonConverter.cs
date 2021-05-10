@@ -6,9 +6,12 @@ using System.Text.Json.Serialization;
 
 namespace IOfThings.Spatial.Text.GeoJson.Converters
 {
+    /// <summary>
+    ///  Allow user to bind Serialization Type with PropertyName. 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class GeoJsonPropertiesJsonConverter<T> : JsonConverter<IGeoJsonProperties<T>>
     {
-
         IDictionary<string, Type> propertyTypes;
 
         public override bool CanConvert(Type typeToConvert)
@@ -43,6 +46,7 @@ namespace IOfThings.Spatial.Text.GeoJson.Converters
             tmp.Add(propertyName, converter);
             propertyTypes = tmp;
         }
+
         protected virtual IGeoJsonProperties<T> CreateProperties() => new GeoJsonProperties<T>();
         protected virtual T ReadContent(ref Utf8JsonReader reader, string propertyName, JsonSerializerOptions options)
         {

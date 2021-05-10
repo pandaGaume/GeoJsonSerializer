@@ -5,20 +5,20 @@ using System.Text.Json.Serialization;
 
 namespace IOfThings.Spatial.Text.GeoJson
 {
-    public class PolymorphicJsonConverter<T,D,P> : JsonConverter<T>
+    public class PolymorphicJsonConverter<T,P> : JsonConverter<T>
     {
         static string[] TypeDiscriminatorDefault = { "type", "@type" };
 
         static readonly Type[] __Types =
         {
-            typeof(GeoJsonPoint<D>),
-            typeof(GeoJsonLineString<D>),
-            typeof(GeoJsonPolygon<D>),
-            typeof(GeoJsonMultiPoint<D>),
-            typeof(GeoJsonMultiLineString<D>),
-            typeof(GeoJsonMultiPolygon<D>),
-            typeof(GeoJsonFeature<D,P>),
-            typeof(GeoJsonFeatureCollection<D,P>)
+            typeof(GeoJsonPoint),
+            typeof(GeoJsonLineString),
+            typeof(GeoJsonPolygon),
+            typeof(GeoJsonMultiPoint),
+            typeof(GeoJsonMultiLineString),
+            typeof(GeoJsonMultiPolygon),
+            typeof(GeoJsonFeature<P>),
+            typeof(GeoJsonFeatureCollection<P>)
         };
 
         string[] _td;

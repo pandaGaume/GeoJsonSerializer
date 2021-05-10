@@ -1,16 +1,21 @@
-﻿
+﻿using System.Text.Json.Serialization;
+
 namespace IOfThings.Spatial.Text.GeoJson
 {
-    public class GeoJsonPoint<T> : GeoJsonSimpleGeometry<T>
+    public class GeoJsonPoint : GeoJsonGeometry
     {
+         Position _pos;
+
+        [JsonPropertyName(Json.PropertyNames.coordinates)]
+        public float[] Coordinates
+        {
+            get => _pos;
+            set => _pos = value;
+        }
+
         public override GeoJsonType Type => GeoJsonType.Point;
 
-        protected override T[] BuildBBox() {
-
-            var box = new T[Coordinates.Length*2];
-            Coordinates.CopyTo(box, 0);
-            Coordinates.CopyTo(box, Coordinates.Length);
-            return box;
-        }
+        [JsonIgnore]
+        public Position Position { get => _pos; set => _pos = value; }
     }
 }

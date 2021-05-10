@@ -6,13 +6,13 @@ using System.Text.Json.Serialization;
 
 namespace IOfThings.Spatial.Text.GeoJson
 {
-    public class GeoJsonFeatureCollection<T,P>: GeoJsonObject<T>, IGeoJsonFeatureCollection<T, P>
+    public class GeoJsonFeatureCollection<P>: GeoJsonObject, IGeoJsonFeatureCollection<P>
     {
-        List<IGeoJsonFeature<T, P>> _features;
+        List<IGeoJsonFeature<P>> _features;
 
         public override GeoJsonType Type => GeoJsonType.FeatureCollection;
 
         [JsonPropertyName(Json.PropertyNames.features)]
-        public IEnumerable<IGeoJsonFeature<T, P>> Features { get => _features; set => _features = value.ToList(); }
+        public IEnumerable<IGeoJsonFeature<P>> Features { get => _features; set => _features = value.ToList(); }
     }
 }

@@ -2,19 +2,8 @@
 
 namespace IOfThings.Spatial.Text.GeoJson
 {
-    [JsonInterfaceConverter(typeof(PolymorphicJsonConverter<IGeoJsonGeometry<double>, double, object>))]
-    public interface IGeoJsonGeometry<T> : IGeoJsonObject<T>
+    [JsonInterfaceConverter(typeof(PolymorphicJsonConverter<IGeoJsonGeometry,object>))]
+    public interface IGeoJsonGeometry : IGeoJsonObject
     {
     }
-
-    public interface ISimpleGeometry<T> : IGeoJsonGeometry<T>
-    {
-        T[] Coordinates { get; set; }
-    }
-
-    public interface ICompoundGeometry<T> : IGeoJsonGeometry<T>
-    {
-        T[][] Coordinates { get; set; }
-    }
-
 }

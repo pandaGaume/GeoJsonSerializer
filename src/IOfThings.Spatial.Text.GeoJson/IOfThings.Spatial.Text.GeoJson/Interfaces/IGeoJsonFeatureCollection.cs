@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace IOfThings.Spatial.Text.GeoJson
 {
-    [JsonInterfaceConverter(typeof(PolymorphicJsonConverter<IGeoJsonFeatureCollection<double,object>, double, object>))]
-    public interface IGeoJsonFeatureCollection<T,P> : IGeoJsonObject<T>
+    [JsonInterfaceConverter(typeof(PolymorphicJsonConverter<IGeoJsonFeatureCollection<object>, object>))]
+    public interface IGeoJsonFeatureCollection<P> : IGeoJsonObject
     {
-        IEnumerable<IGeoJsonFeature<T,P>> Features { get; set; }
+        IEnumerable<IGeoJsonFeature<P>> Features { get; set; }
     }
 }
