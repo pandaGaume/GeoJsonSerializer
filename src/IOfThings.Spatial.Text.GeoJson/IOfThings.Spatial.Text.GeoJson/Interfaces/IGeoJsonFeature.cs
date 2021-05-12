@@ -1,5 +1,4 @@
 ﻿using IOfThings.Spatial.Text.Json;
-using System.Collections.Generic;
 
 namespace IOfThings.Spatial.Text.GeoJson
 {

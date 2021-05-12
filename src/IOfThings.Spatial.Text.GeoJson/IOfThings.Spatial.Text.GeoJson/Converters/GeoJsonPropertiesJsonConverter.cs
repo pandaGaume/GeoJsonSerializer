@@ -14,12 +14,6 @@ namespace IOfThings.Spatial.Text.GeoJson.Converters
     {
         IDictionary<string, Type> propertyTypes;
 
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return (typeToConvert.IsInterface && typeToConvert.IsGenericType && typeof(IDictionary<string, T>).IsAssignableFrom(typeToConvert.GetGenericTypeDefinition()) ||
-                    typeToConvert.GetInterfaces().Any(i => i.IsGenericType && typeof(IDictionary<string, T>).IsAssignableFrom(i.GetGenericTypeDefinition())));
-        }
-
         public override IGeoJsonProperties<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();

@@ -1,13 +1,15 @@
-﻿namespace IOfThings.Spatial.Text.GeoJson
+﻿using System.Linq;
+
+namespace IOfThings.Spatial.Text.GeoJson
 {
-    public struct Position
+    public class Position
     {
         public static readonly Position Min = new Position(float.MinValue, float.MinValue, float.MinValue);
         public static readonly Position Max = new Position(float.MaxValue, float.MaxValue, float.MaxValue);
 
 
-        public static implicit operator Position(float[] coordinates) => new Position(coordinates);
-        public static implicit operator float[](Position point) => point._alt.HasValue ? new float[] { point._lon, point._lat, point._alt.Value } : new float[] { point._lon, point._lat };
+        public static implicit operator Position(float[] coordinates) => coordinates == null ? null : new Position(coordinates);
+        public static implicit operator float[](Position point) => point == null ? null : point._alt.HasValue ? new float[] { point._lon, point._lat, point._alt.Value } : new float[] { point._lon, point._lat };
 
         float _lat;
         float _lon;
@@ -19,17 +21,26 @@
             _lon = lon;
             _alt = alt;
         }
-        public Position(float[] src, int i = 0) :this(0,0)
+        public Position(float[] coordinates, int i = 0) :this(0,0)
         {
-            SetInPlace(src, i);
+            SetInPlace(coordinates, i);
         }
 
         public void SetInPlace(float[] coordinates, int i = 0)
         {
-            var l = coordinates.Length;
-            _lon = l > i ? coordinates[i++] : 0;
-            _lat = l > i ? coordinates[i++] : 0;
-            _alt = l > i ? (float?)coordinates[i] : null;
+            if (coordinates == null)
+            {
+                _lat = 0;
+                _lon = 0;
+                _alt = null;
+            }
+            else
+            {
+                var l = coordinates.Length;
+                _lon = l > i ? coordinates[i++] : 0;
+                _lat = l > i ? coordinates[i++] : 0;
+                _alt = l > i ? (float?)coordinates[i] : null;
+            }
         }
 
         public float Latitude { get => _lat; set => _lat = value; }

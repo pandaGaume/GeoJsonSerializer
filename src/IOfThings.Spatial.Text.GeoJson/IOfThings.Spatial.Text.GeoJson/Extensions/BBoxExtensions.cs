@@ -58,5 +58,13 @@ namespace IOfThings.Spatial.Text.GeoJson
         }
         public static bool HasAltitude(this BBox a) => a.SouthWest.Altitude.HasValue && a.NorthEast.Altitude.HasValue;
 
+        public static Position GetCenter(this BBox a)
+        {
+            var dlon = a.NorthEast.Longitude - a.SouthWest.Longitude;
+            var dlat = a.NorthEast.Longitude - a.SouthWest.Longitude;
+            float? dalt = a.HasAltitude() ? a.NorthEast.Altitude - a.SouthWest.Altitude : null ;
+            return new Position(a.SouthWest.Latitude + dlat / 2, a.SouthWest.Longitude + dlon / 2, dalt.HasValue ? a.SouthWest.Altitude + dalt.Value / 2 : null);
+        }
+
     }
 }
